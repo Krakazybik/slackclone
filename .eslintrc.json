@@ -1,0 +1,42 @@
+{
+    "plugins": [
+        "@typescript-eslint",
+        "prettier",
+        "jsx-a11y",
+        "react-hooks"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "airbnb/hooks",
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
+        "plugin:jsx-a11y/recommended",
+        "prettier"
+    ],
+
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+},
+    "env": {
+    "es6": true,
+        "browser": true,
+        "node": true
+},
+    "rules": {
+        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "no-bitwise": "off",
+        "react/prop-types": "off",
+        "no-debugger": "off",
+        "no-console": 0,
+        "prettier/prettier": [
+            "warn", {
+                "semi": false
+            }
+        ]
+}
+}
