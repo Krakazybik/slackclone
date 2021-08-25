@@ -1,9 +1,11 @@
 import { Field, Form, Formik } from "formik"
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import * as Yup from "yup"
 import { Redirect } from "react-router-dom"
-import LoginAPI from "../../api/login"
-import { JWTContext } from "../tools/contexts"
+import { useDispatch, useSelector } from "react-redux"
+import SlackAPI from "../../api/slack"
+import { updateToken } from "../../store/login"
+import selectToken from "../../store/login-selector"
 
 const LoginFormSchema = Yup.object().shape({
   login: Yup.string().required().max(16).min(3),
@@ -16,14 +18,14 @@ interface LoginFormValues {
 }
 
 const Login: React.FC = () => {
-  const tokenContext = useContext(JWTContext)
   const [loginError, setLoginError] = useState("")
+  const jwtToken = useSelector(selectToken)
+  const dispatch = useDispatch()
 
   const handleSubmit = async ({ login, password }: LoginFormValues) => {
     try {
-      const authToken: string = await LoginAPI.login(login, password)
-      localStorage.setItem("jwtToken", authToken)
-      if (tokenContext.setJwtToken) tokenContext.setJwtToken(authToken)
+      const authToken: string = await SlackAPI.login(login, password)
+      dispatch(updateToken(authToken))
     } catch (err) {
       console.warn(err)
       setLoginError(`Ошибка авторизации`)
@@ -33,7 +35,7 @@ const Login: React.FC = () => {
   return (
     <div>
       <span>{loginError}</span>
-      {tokenContext.jwtToken && <Redirect to="/" />}
+      {jwtToken && <Redirect to="/" />}
       <Formik
         initialValues={{ login: "", password: "" }}
         validationSchema={LoginFormSchema}

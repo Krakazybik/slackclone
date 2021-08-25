@@ -1,35 +1,36 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Redirect, Route, Switch } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 import Login from "./components/Login/Login"
-import { JWTContext, AuthContext } from "./components/tools/contexts"
 import NotFound from "./components/tools/NotFound"
+import selectToken from "./store/login-selector"
+import { fetchChannels } from "./store/channels"
 
 function App() {
-  const [jwtToken, setJwtToken] = useState<string>("")
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem("jwtToken")
-    if (storedToken) setJwtToken(storedToken)
-  }, [])
+  const jwtToken = useSelector(selectToken)
+  const dispatch = useDispatch()
+  const onClickChannels = () => {
+    dispatch(fetchChannels())
+  }
 
   return (
     <div className="App">
-      <JWTContext.Provider value={{ jwtToken, setJwtToken }}>
-        <AuthContext.Provider value={!!jwtToken}>
-          <Switch>
-            <Route exact path="/">
-              <div>o_O</div>
-              {!jwtToken && <Redirect to="/login" />}
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
-        </AuthContext.Provider>
-      </JWTContext.Provider>
+      <Switch>
+        <Route exact path="/">
+          <div>o_O</div>
+          <button type="button" onClick={onClickChannels}>
+            Channels
+          </button>
+          {!jwtToken && <Redirect to="/login" />}
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
     </div>
   )
 }
