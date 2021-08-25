@@ -4869,6 +4869,13 @@ eslint-scope@^5.0.0, eslint-scope@^5.1.1:
     esrecurse "^4.3.0"
     estraverse "^4.1.1"
 
+eslint-teamcity@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-teamcity/-/eslint-teamcity-4.0.0.tgz#63e730a9613c5efd0d09ddd439b41bed1225361d"
+  integrity sha512-/AsaCXWbcxE/xM6mYJtJbvRU1pMTTobc0H5IEjOws1T7H8kAXQpFoDfFkIMFpO27OjzLQBc10z9rdnZMjNZ9fg==
+  dependencies:
+    fs-extra "^10.0.x"
+
 eslint-utils@^2.0.0, eslint-utils@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/eslint-utils/-/eslint-utils-2.1.0.tgz#d2de5e03424e707dc10c74068ddedae708741b27"
@@ -5484,6 +5491,15 @@ from2@^2.1.0:
   dependencies:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
+
+fs-extra@^10.0.x:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.0.0.tgz#9ff61b655dde53fb34a82df84bb214ce802e17c1"
+  integrity sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
 
 fs-extra@^7.0.0:
   version "7.0.1"
@@ -7067,6 +7083,11 @@ jest-snapshot@^26.6.0, jest-snapshot@^26.6.2:
     natural-compare "^1.4.0"
     pretty-format "^26.6.2"
     semver "^7.3.2"
+
+jest-teamcity@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/jest-teamcity/-/jest-teamcity-1.10.0.tgz#13918ab4f43b4571e0b8483bea34aa7fb024154d"
+  integrity sha512-iEqQAgKa/qlqnLlloTJy57Sr2zzcE8MbDivROCLFsFJvDhwFe6ab9LP2/YYBKK/yLC6Wp8UFmBJGA8cADj+9mA==
 
 jest-util@^26.6.0, jest-util@^26.6.2:
   version "26.6.2"
