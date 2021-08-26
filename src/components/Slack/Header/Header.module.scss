@@ -1,0 +1,39 @@
+@import "./src/styles/global.module";
+
+.header {
+  grid-area: header;
+  background-color: $slack-primary;
+  border-radius: 16px 0 0 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+
+.button {
+  color: $slack-light;
+  width: 130px;
+  display: flex;
+  justify-content: space-evenly;
+  span {
+    padding-left: 7px;
+  }
+}
+
+.button:hover {
+  color: $slack-secondary;
+}
+
+.logo {
+  width: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.messages {
+  height: 85px;
+}
+
+.contacts {
+  height: 99px;
+}

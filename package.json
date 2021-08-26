@@ -29,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:ci": "jest --coverage --testResultsProcessor=jest-teamcity",
+    "test:ci": "yarn test --coverage --testResultsProcessor=jest-teamcity",
     "lint:ci": "eslint --format ./node_modules/eslint-teamcity/index.js ./src"
   },
   "eslintConfig": {
@@ -65,6 +65,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-teamcity": "^4.0.0",
     "jest-teamcity": "^1.10.0",
+    "node-sass": "4.14.1",
     "prettier": "^2.3.2"
   }
 }

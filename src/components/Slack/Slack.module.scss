@@ -1,0 +1,18 @@
+.slack {
+  display: grid;
+  grid-template-areas: "header main" "nav main";
+  grid-template-rows: 72px 10fr;
+  grid-template-columns: 464px 10fr;
+}
+
+.slack_header {
+  grid-area: header;
+}
+
+.slack_main {
+  grid-area: main;
+}
+
+.slack_nav {
+  grid-area: nav;
+}

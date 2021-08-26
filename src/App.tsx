@@ -5,6 +5,7 @@ import Login from "./components/Login/Login"
 import NotFound from "./components/tools/NotFound"
 import selectToken from "./store/login-selector"
 import { fetchChannels } from "./store/channels"
+import Slack from "./components/Slack/Slack"
 
 function App() {
   const jwtToken = useSelector(selectToken)
@@ -17,11 +18,9 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <div>o_O</div>
-          <button type="button" onClick={onClickChannels}>
-            Channels
-          </button>
-          {!jwtToken && <Redirect to="/login" />}
+          <Slack />
+
+          {!jwtToken && <Redirect to="*/login" />}
         </Route>
         <Route exact path="/login">
           <Login />
