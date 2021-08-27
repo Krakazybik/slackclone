@@ -1,17 +1,26 @@
+@import "src/styles/global.module";
+
 .send_wrapper {
-  margin: 5px;
+  margin: 0 5px 5px 5px;
   min-height: 100px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 
 }
 
 .text {
+  font-size: 14px;
+  font-family: $slack-font;
+  color: $slack-secondary;
   margin: 20px 0 20px 20px;
   height: 80px;
-  width: 100%;
+  width: 80%;
+  border: none;
+  outline: none;
+  resize:none;
 }
 
 .button {

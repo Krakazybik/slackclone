@@ -29,3 +29,11 @@
   margin: 10px auto 0 auto;
   padding: 0 10px 0 10px;
 }
+
+.underline {
+  align-self: center;
+  margin-top: 5px;
+  border-bottom: 1.5px solid $slack-gray;
+  height: 1.5px;
+  width: 95%;
+}

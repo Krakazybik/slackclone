@@ -2,34 +2,47 @@
 
 .chat_wrapper {
   display: grid;
-  height: 100%;
   grid-template-areas: "chat" "send";
-  grid-template-rows: 5fr 1fr;
+  grid-template-rows: 10fr 1fr;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.08);
+  height: calc(90vh - 20px);
 }
 
 .chat {
+  margin: 20px 20px 0 20px;
   grid-area: chat;
-  overflow-x: scroll;
+  overflow: auto;
 }
 
 .send {
+  margin-bottom: 10px;
   grid-area: send;
+  height: 120px;
 }
 
+.chat_message_text {
+  margin: 10px 20px 10px 20px;
+
+}
 
 .chat_message {
-  left: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   background-color: $slack-primary;
-  color: $slack-light;
+  color: $slack-gray;
   font-family: $slack-font;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 24px;
   border-radius: 5px;
   margin: 20px;
-  padding: 30px;
+  padding: 20px 20px 5px;
   width: 70%;
 }
 
 .chat_message_name {
-margin-bottom: 10px;
+
+  margin: 5px 20px 5px 20px;
+  font-size: 14px;
+  font-weight: lighter;
 }
