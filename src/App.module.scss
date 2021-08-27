@@ -1,0 +1,22 @@
+@import "./src/styles/global.module";
+
+.app {
+  background-color: $slack-back;
+
+}
+
+.slack_wrapper {
+  background-color: white;
+  margin: 24px;
+  border-radius: 16px;
+  display: grid;
+  grid-template-areas: "header main" "nav main";
+  grid-template-rows: 72px 10fr;
+  grid-template-columns: 464px 10fr;
+}
+
+.slack_main {
+  max-height: 80%;
+  overflow-y: scroll;
+  grid-area: main;
+}

@@ -6,6 +6,10 @@ import NotFound from "./components/tools/NotFound"
 import selectToken from "./store/login-selector"
 import { fetchChannels } from "./store/channels"
 import Slack from "./components/Slack/Slack"
+import Header from "./components/Slack/Header/Header"
+import Profile from "./components/Slack/Profile/Profile"
+
+import styles from "./App.module.scss"
 
 function App() {
   const jwtToken = useSelector(selectToken)
@@ -15,19 +19,21 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={styles.app}>
       <Switch>
-        <Route exact path="/">
-          <Slack />
-
-          {!jwtToken && <Redirect to="*/login" />}
+        <Route path="/">
+          {!jwtToken && <Redirect to="/login" />}
+          <div className={styles.slack_wrapper}>
+            <Header />
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <div className={styles.slack_main}>sdd</div>
+          </div>
         </Route>
+
         <Route exact path="/login">
           <Login />
-        </Route>
-
-        <Route>
-          <NotFound />
         </Route>
       </Switch>
     </div>

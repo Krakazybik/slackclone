@@ -8,5 +8,17 @@ $slack-danger: #DC3545;
 $slack-light: #FBFBFB;
 $slack-dark: #343A40;
 $slack-font: Roboto;
+$slack-back: #E5E5E5;
 
+.h2 {
+  padding-left: 24px;
+  font-size: 32px;
+  line-height: 37px;
+  font-family: $slack-font;
+}
 
+@mixin slack-font-secondary ($property) {
+  font-family: $slack-font;
+  font-size: $property;
+  color: $slack-secondary;
+}
