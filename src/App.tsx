@@ -1,26 +1,35 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Redirect, Route, Switch } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import Login from "./components/Login/Login"
-import NotFound from "./components/tools/NotFound"
 import selectToken from "./store/login-selector"
-import { fetchChannels } from "./store/channels"
-import Slack from "./components/Slack/Slack"
 import Header from "./components/Slack/Header/Header"
 import Profile from "./components/Slack/Profile/Profile"
-
 import styles from "./App.module.scss"
+import { startChat } from "./store/chat"
+import Chat from "./components/Slack/Chat/Chat"
 
-function App() {
+const App: React.FC = () => {
   const jwtToken = useSelector(selectToken)
   const dispatch = useDispatch()
-  const onClickChannels = () => {
-    dispatch(fetchChannels())
+
+  useEffect(() => {
+    dispatch(startChat())
+  }, [jwtToken, dispatch])
+
+  const handleClickLogout = () => {
+    localStorage.clear()
   }
 
   return (
     <div className={styles.app}>
+      <button type="button" onClick={handleClickLogout}>
+        Logout
+      </button>
       <Switch>
+        <Route exact path="/login">
+          <Login />
+        </Route>
         <Route path="/">
           {!jwtToken && <Redirect to="/login" />}
           <div className={styles.slack_wrapper}>
@@ -28,12 +37,10 @@ function App() {
             <Route path="/profile">
               <Profile />
             </Route>
-            <div className={styles.slack_main}>sdd</div>
+            <div className={styles.slack_main}>
+              <Chat />
+            </div>
           </div>
-        </Route>
-
-        <Route exact path="/login">
-          <Login />
         </Route>
       </Switch>
     </div>

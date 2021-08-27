@@ -3,8 +3,7 @@ import React, { useState } from "react"
 import * as Yup from "yup"
 import { Redirect } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import SlackAPI from "../../api/slack"
-import { updateToken } from "../../store/login"
+import { loginUser } from "../../store/login"
 import selectToken from "../../store/login-selector"
 
 const LoginFormSchema = Yup.object().shape({
@@ -23,13 +22,7 @@ const Login: React.FC = () => {
   const dispatch = useDispatch()
 
   const handleSubmit = async ({ login, password }: LoginFormValues) => {
-    try {
-      const authToken: string = await SlackAPI.login(login, password)
-      dispatch(updateToken(authToken))
-    } catch (err) {
-      console.warn(err)
-      setLoginError(`Ошибка авторизации`)
-    }
+    dispatch(loginUser({ login, password }))
   }
 
   return (

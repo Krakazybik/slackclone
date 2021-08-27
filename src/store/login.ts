@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import slack from "../api/slack"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import SlackAPI from "../api/slack"
 
 interface LoginState {
   token: string
@@ -8,27 +8,47 @@ interface LoginState {
 
 const initLocalJwtToken = () => {
   const token = localStorage.getItem("jwtToken")
-  if (token) slack.setJwtToken(token)
+  if (token) SlackAPI.setJwtToken(token)
   return token || ""
 }
 
+const initUserName = () => {
+  const userName = localStorage.getItem("username")
+  return userName || ""
+}
+
+export const loginUser = createAsyncThunk(
+  "login/login",
+  async (
+    { login, password }: { login: string; password: string },
+    thunkAPI
+  ) => {
+    try {
+      return await SlackAPI.login(login, password)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
 const initialState: LoginState = {
   token: initLocalJwtToken(),
-  username: "",
+  username: initUserName(),
 }
 
 const loginSlice = createSlice({
   name: "login",
   initialState,
-  reducers: {
-    updateToken(state: LoginState, action: PayloadAction<string>) {
-      console.log("updateToken", action.payload)
-      slack.setJwtToken(action.payload)
-      localStorage.setItem("jwtToken", action.payload)
-      state.token = action.payload
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      state.token = action.payload.token
+      state.username = action.payload.username
+      SlackAPI.setJwtToken(action.payload.token)
+      localStorage.setItem("jwtToken", action.payload.token)
+      localStorage.setItem("username", action.payload.username)
+    })
   },
 })
 
-export const { updateToken } = loginSlice.actions
 export default loginSlice.reducer
