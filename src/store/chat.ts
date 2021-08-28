@@ -4,7 +4,7 @@ import SlackAPI from "../api/slack"
 import { addChannel, removeFromChannels } from "./channels"
 import { addMessage } from "./messages"
 
-const socket = new SocketAPI("http://localhost:5000")
+const socket = new SocketAPI("http://srv.evgeraskin.ru:5000")
 
 interface IChatState {
   currentChannelId: number
