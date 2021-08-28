@@ -21,9 +21,13 @@ const channelsSlice = createSlice({
         (channel) => channel.id !== action.payload
       )
     },
+    clearChannelsState() {
+      return initialState
+    },
   },
 })
 
-export const { addChannel, removeFromChannels } = channelsSlice.actions
+export const { addChannel, removeFromChannels, clearChannelsState } =
+  channelsSlice.actions
 
 export default channelsSlice.reducer

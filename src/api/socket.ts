@@ -7,15 +7,16 @@ class SocketAPI {
     this.socket = io(host, { path })
   }
 
-  on(event: string, callback: (arg: any) => void) {
-    return new Promise((resolve, reject) => {
-      if (!this.socket) return reject(new Error("Socket error."))
-      return this.socket.on(event, callback)
-    })
+  on(event: string, callback: (arg: any) => void): void {
+    this.socket.on(event, callback)
   }
 
   emit(event: string, data: any): void {
     this.socket.emit(event, data)
+  }
+
+  close(): void {
+    this.socket.disconnect()
   }
 }
 

@@ -40,11 +40,10 @@ const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    exit(state) {
-      state.token = ""
-      state.username = ""
+    clearLoginState() {
       localStorage.removeItem("jwtToken")
       localStorage.removeItem("username")
+      return initialState
     },
   },
   extraReducers: (builder) => {
@@ -57,6 +56,6 @@ const loginSlice = createSlice({
     })
   },
 })
-export const { exit } = loginSlice.actions
+export const { clearLoginState } = loginSlice.actions
 
 export default loginSlice.reducer

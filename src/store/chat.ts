@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import SocketAPI from "../api/socket"
 import SlackAPI from "../api/slack"
-import { addChannel, removeFromChannels } from "./channels"
-import { addMessage } from "./messages"
+import { addChannel, clearChannelsState, removeFromChannels } from "./channels"
+import { addMessage, clearMessageState } from "./messages"
+import { clearLoginState } from "./login"
 
 const socket = new SocketAPI("http://srv.evgeraskin.ru:5000")
 
@@ -121,6 +122,9 @@ const chatSlice = createSlice({
     switchChannel(state, action: PayloadAction<number>) {
       state.currentChannelId = action.payload
     },
+    clearChatState() {
+      return initialState
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(newMessage.fulfilled, (state, action) => {
@@ -136,6 +140,17 @@ const chatSlice = createSlice({
   },
 })
 
-export const { switchChannel } = chatSlice.actions
+export const { switchChannel, clearChatState } = chatSlice.actions
+
+export const exitChat = createAsyncThunk(
+  "chat/exitChat",
+  async (data, thunkAPI) => {
+    socket.close()
+    await thunkAPI.dispatch(clearLoginState())
+    await thunkAPI.dispatch(clearChatState())
+    await thunkAPI.dispatch(clearChannelsState())
+    await thunkAPI.dispatch(clearMessageState())
+  }
+)
 
 export default chatSlice.reducer

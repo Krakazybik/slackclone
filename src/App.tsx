@@ -16,7 +16,12 @@ const App: React.FC = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(startChat())
+    console.log("Start")
+
+    if (jwtToken) {
+      console.log(jwtToken)
+      dispatch(startChat())
+    }
   }, [jwtToken])
 
   return (

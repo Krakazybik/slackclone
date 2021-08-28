@@ -1,11 +1,11 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { Redirect } from "react-router-dom"
-import { exit } from "../../store/login"
+import { exitChat } from "../../store/chat"
 
 const Exit: React.FC = () => {
   const dispatch = useDispatch()
-  dispatch(exit())
+  dispatch(exitChat())
   return <Redirect to="/login" />
 }
 
