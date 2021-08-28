@@ -39,7 +39,14 @@ const initialState: LoginState = {
 const loginSlice = createSlice({
   name: "login",
   initialState,
-  reducers: {},
+  reducers: {
+    exit(state) {
+      state.token = ""
+      state.username = ""
+      localStorage.removeItem("jwtToken")
+      localStorage.removeItem("username")
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.token = action.payload.token
@@ -50,5 +57,6 @@ const loginSlice = createSlice({
     })
   },
 })
+export const { exit } = loginSlice.actions
 
 export default loginSlice.reducer

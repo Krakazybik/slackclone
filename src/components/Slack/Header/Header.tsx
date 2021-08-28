@@ -28,7 +28,7 @@ const Header: React.FC = () => {
           <span>Профиль</span>
         </div>
       </Link>
-      <Link to="/channels" style={{ textDecoration: "none" }}>
+      <Link to="/exit" style={{ textDecoration: "none" }}>
         <div className={styles.button}>
           <img src={Messages} alt="none" />
           <span>Выход</span>

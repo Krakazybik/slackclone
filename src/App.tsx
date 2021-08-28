@@ -9,6 +9,7 @@ import { startChat } from "./store/chat"
 import Chat from "./components/Slack/Chat/Chat"
 import Channels from "./components/Channels/Channels"
 import { selectToken } from "./store/selectors"
+import Exit from "./components/tools/Exit"
 
 const App: React.FC = () => {
   const jwtToken = useSelector(selectToken)
@@ -16,7 +17,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(startChat())
-  }, [jwtToken, dispatch])
+  }, [jwtToken])
 
   return (
     <div className={styles.app}>
@@ -26,6 +27,7 @@ const App: React.FC = () => {
         </Route>
         <Route path="/">
           {!jwtToken && <Redirect to="/login" />}
+          <Redirect to="/channels" />
           <div className={styles.slack_wrapper}>
             <Header />
             <Route path="/profile">
@@ -33,6 +35,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/channels">
               <Channels />
+            </Route>
+            <Route path="/exit">
+              <Exit />
             </Route>
             <div className={styles.slack_main}>
               <Chat />

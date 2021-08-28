@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik"
-import React, { useState } from "react"
+import React from "react"
 import * as Yup from "yup"
 import { Redirect } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
@@ -17,7 +17,6 @@ interface LoginFormValues {
 }
 
 const Login: React.FC = () => {
-  const [loginError, setLoginError] = useState("")
   const jwtToken = useSelector(selectToken)
   const dispatch = useDispatch()
 
@@ -27,8 +26,7 @@ const Login: React.FC = () => {
 
   return (
     <div>
-      <span>{loginError}</span>
-      {jwtToken && <Redirect to="/" />}
+      {jwtToken && <Redirect to="/channels" />}
       <Formik
         initialValues={{ login: "", password: "" }}
         validationSchema={LoginFormSchema}
