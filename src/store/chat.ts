@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import SocketAPI from "../api/socket"
 import SlackAPI from "../api/slack"
-import { addChannel } from "./channels"
+import { addChannel, removeFromChannels } from "./channels"
 import { addMessage } from "./messages"
 
 const socket = new SocketAPI("http://localhost:5000")
@@ -53,8 +53,15 @@ export const newMessage = createAsyncThunk(
 
 export const newChannel = createAsyncThunk(
   "chat/newChannel",
-  async (channelName: string, thunkAPI) => {
+  async (channelName: string) => {
     socket.emit("newChannel", { name: channelName })
+  }
+)
+
+export const removeChannel = createAsyncThunk(
+  "chat/removeChannel",
+  async (channelId: number) => {
+    socket.emit("removeChannel", { id: channelId })
   }
 )
 
@@ -78,7 +85,7 @@ const subscribeRemoveChannel = createAsyncThunk(
   "chat/subscribeRemoveChannel",
   async (data, thunkAPI) => {
     socket.on("removeChannel", (message) =>
-      thunkAPI.dispatch(addMessage(message))
+      thunkAPI.dispatch(removeFromChannels(message.id))
     )
   }
 )
