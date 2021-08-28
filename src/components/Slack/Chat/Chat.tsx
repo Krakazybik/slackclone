@@ -2,8 +2,8 @@ import React from "react"
 import { useSelector } from "react-redux"
 import styles from "./Chat.module.scss"
 import Send from "./Send/Send"
-import selectMessages from "../../../store/messages-selector"
 import Underline from "../../tools/Underline"
+import { selectMessages } from "../../../store/selectors"
 
 const Chat = () => {
   const messages = useSelector(selectMessages)

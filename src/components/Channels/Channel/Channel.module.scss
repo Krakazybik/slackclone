@@ -1,0 +1,31 @@
+@import "/src/styles/global.module";
+
+.edit_wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 15%;
+
+  img:hover {
+    filter: alpha(0.5);
+  }
+}
+
+.channel {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 10px 15px 30px;
+  border-bottom: 1px solid $slack-gray;
+  width: 85%;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.channel_selected {
+  color: $slack-primary;
+}
+
+.channel:hover {
+  color: $slack-info;
+}

@@ -4,7 +4,7 @@ import * as Yup from "yup"
 import { Redirect } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { loginUser } from "../../store/login"
-import selectToken from "../../store/login-selector"
+import { selectToken } from "../../store/selectors"
 
 const LoginFormSchema = Yup.object().shape({
   login: Yup.string().required().max(16).min(3),

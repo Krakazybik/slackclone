@@ -1,12 +1,34 @@
-$slack-primary: #4545A5;
-$slack-gray: #EFEFEF;
-$slack-secondary: #6C757D;
-$slack-success: #28A745;
-$slack-info: #17A2B8;
-$slack-warning: #FFC107;
-$slack-danger: #DC3545;
-$slack-light: #FBFBFB;
-$slack-dark: #343A40;
-$slack-font: Roboto;
+@import "/src/styles/global.module";
 
+.channel_wrapper {
+  margin: 10px 0 10px 10px;
+  display: flex;
+  flex-direction: column ;
+  flex-wrap: nowrap;
+  justify-items: center;
+  align-items: center;
+  @include slack-font-secondary(16px);
+  overflow: auto;
+}
 
+.new_channel {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 10px 15px 30px;
+  border-bottom: 1px solid $slack-gray;
+  width: 85%;
+
+}
+
+.new_channel_edit {
+  margin: 22px;
+}
+
+.new_channel:hover {
+  color: $slack-info;
+}
+
+.new_channel {
+  color: $slack-success;
+  text-align: right;
+}

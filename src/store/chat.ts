@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import SocketAPI from "../api/socket"
 import SlackAPI from "../api/slack"
 import { addChannel } from "./channels"
@@ -51,6 +51,13 @@ export const newMessage = createAsyncThunk(
   }
 )
 
+export const newChannel = createAsyncThunk(
+  "chat/newChannel",
+  async (channelName: string, thunkAPI) => {
+    socket.emit("newChannel", { name: channelName })
+  }
+)
+
 export const subscribeMessages = createAsyncThunk(
   "chat/subscribeMessages",
   async (data, thunkAPI) => {
@@ -61,7 +68,9 @@ export const subscribeMessages = createAsyncThunk(
 const subscribeChannels = createAsyncThunk(
   "chat/subscribeChannels",
   async (data, thunkAPI) => {
-    socket.on("newChannel", (message) => thunkAPI.dispatch(addMessage(message)))
+    socket.on("newChannel", (channelName) =>
+      thunkAPI.dispatch(addChannel(channelName))
+    )
   }
 )
 
@@ -101,7 +110,11 @@ export const startChat = createAsyncThunk(
 const chatSlice = createSlice({
   name: "chat",
   initialState,
-  reducers: {},
+  reducers: {
+    switchChannel(state, action: PayloadAction<number>) {
+      state.currentChannelId = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(newMessage.fulfilled, (state, action) => {
       console.log(action)
@@ -115,5 +128,7 @@ const chatSlice = createSlice({
     })
   },
 })
+
+export const { switchChannel } = chatSlice.actions
 
 export default chatSlice.reducer

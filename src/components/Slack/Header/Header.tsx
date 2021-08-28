@@ -15,17 +15,10 @@ const Header: React.FC = () => {
         </div>
       </Link>
 
-      <Link to="/contacts" style={{ textDecoration: "none" }}>
+      <Link to="/channels" style={{ textDecoration: "none" }}>
         <div className={styles.button}>
           <img src={Contacts} alt="none" />
-          <span>Контакты</span>
-        </div>
-      </Link>
-
-      <Link to="/messages" style={{ textDecoration: "none" }}>
-        <div className={styles.button}>
-          <img src={Messages} alt="none" />
-          <span>Сообщения</span>
+          <span>Каналы</span>
         </div>
       </Link>
 
@@ -33,6 +26,12 @@ const Header: React.FC = () => {
         <div className={styles.button}>
           <img src={Profile} alt="none" />
           <span>Профиль</span>
+        </div>
+      </Link>
+      <Link to="/channels" style={{ textDecoration: "none" }}>
+        <div className={styles.button}>
+          <img src={Messages} alt="none" />
+          <span>Выход</span>
         </div>
       </Link>
     </div>

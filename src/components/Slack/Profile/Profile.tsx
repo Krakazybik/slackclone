@@ -11,7 +11,6 @@ const Profile: React.FC = () => {
   return (
     <div className={styles.profile}>
       <h2 className={styles.h2}>Профиль</h2>
-      <Input width={400} type="text" placeholder="Поиск по сообщениям" />
       <img className={styles.avatar} src={Avatar} alt="none" />
       <div className={styles.name}>Домовёнок Кузя</div>
       <div className={styles.status}>

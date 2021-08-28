@@ -2,12 +2,13 @@ import React, { useEffect } from "react"
 import { Redirect, Route, Switch } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import Login from "./components/Login/Login"
-import selectToken from "./store/login-selector"
 import Header from "./components/Slack/Header/Header"
 import Profile from "./components/Slack/Profile/Profile"
 import styles from "./App.module.scss"
 import { startChat } from "./store/chat"
 import Chat from "./components/Slack/Chat/Chat"
+import Channels from "./components/Channels/Channels"
+import { selectToken } from "./store/selectors"
 
 const App: React.FC = () => {
   const jwtToken = useSelector(selectToken)
@@ -17,15 +18,8 @@ const App: React.FC = () => {
     dispatch(startChat())
   }, [jwtToken, dispatch])
 
-  const handleClickLogout = () => {
-    localStorage.clear()
-  }
-
   return (
     <div className={styles.app}>
-      <button type="button" onClick={handleClickLogout}>
-        Logout
-      </button>
       <Switch>
         <Route exact path="/login">
           <Login />
@@ -36,6 +30,9 @@ const App: React.FC = () => {
             <Header />
             <Route path="/profile">
               <Profile />
+            </Route>
+            <Route path="/channels">
+              <Channels />
             </Route>
             <div className={styles.slack_main}>
               <Chat />

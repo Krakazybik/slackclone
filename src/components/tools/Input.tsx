@@ -7,6 +7,8 @@ interface IInputProps {
   type?: "text" | "password"
   src?: string
   label?: string
+  callback?: (data: string) => void
+  autofocus?: boolean
 }
 
 const Input: React.FC<IInputProps> = ({
@@ -15,6 +17,8 @@ const Input: React.FC<IInputProps> = ({
   placeholder = "",
   src,
   label,
+  callback,
+  autofocus = false,
 }) => {
   return (
     <div className={styles.input_wrapper}>
@@ -23,8 +27,14 @@ const Input: React.FC<IInputProps> = ({
           {label}
         </div>
       )}
-      {/* eslint-disable-next-line react/jsx-props-no-spreading,react/destructuring-assignment */}
       <input
+        /* eslint-disable-next-line jsx-a11y/no-autofocus */
+        autoFocus={autofocus}
+        onKeyPress={(event) =>
+          event.key === "Enter" &&
+          callback &&
+          callback(event.currentTarget.value)
+        }
         style={{ width: src ? width - 34 : width, color: label && "#343A40" }}
         className={styles.input}
         placeholder={placeholder}
