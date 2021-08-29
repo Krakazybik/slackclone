@@ -43,7 +43,6 @@ export const newMessage = createAsyncThunk(
       chat: { currentChannelId: number }
       login: { username: string }
     }
-    console.log(state)
     socket.emit("newMessage", {
       message,
       name: state.login.username,
@@ -101,7 +100,7 @@ const subscribeRenameChannel = createAsyncThunk(
 )
 
 export const startChat = createAsyncThunk(
-  "chat/subscribeRenameChannel",
+  "chat/startChat",
   async (data, thunkAPI) => {
     try {
       await thunkAPI.dispatch(fetchChatData())

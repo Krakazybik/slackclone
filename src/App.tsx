@@ -16,12 +16,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log("Start")
-
-    if (jwtToken) {
-      console.log(jwtToken)
-      dispatch(startChat())
-    }
+    if (jwtToken) dispatch(startChat())
   }, [jwtToken])
 
   return (
@@ -31,8 +26,8 @@ const App: React.FC = () => {
           <Login />
         </Route>
         <Route path="/">
-          {!jwtToken && <Redirect to="/login" />}
-          <Redirect to="/channels" />
+          {jwtToken ? <Redirect to="/channels" /> : <Redirect to="/login" />}
+
           <div className={styles.slack_wrapper}>
             <Header />
             <Route path="/profile">

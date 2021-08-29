@@ -1,5 +1,8 @@
 import axios from "axios"
 
+export const API_PATH = "/api/v1"
+export const API_HOST = "http://srv.evgeraskin.ru:5000"
+
 export interface IChannel {
   id: number
   name: string
@@ -25,7 +28,7 @@ export interface ILoginData {
 }
 
 const axiosInstance = axios.create({
-  baseURL: "http://srv.evgeraskin.ru:5000/api/v1",
+  baseURL: `http://srv.evgeraskin.ru:5000${API_PATH}`,
   headers: { "content-type": "application/json", Accept: "application/json" },
 })
 
@@ -34,18 +37,15 @@ const SlackAPI = {
     axiosInstance.defaults.headers.common.Authorization = `Bearer ${jwtToken}`
   },
   async login(username: string, password: string): Promise<ILoginData> {
-    let loginData
-    try {
-      const response = await axiosInstance.post("/login", {
-        username,
-        password,
-      })
-      loginData = response.data
-    } catch (err) {
-      console.log(err)
-      throw err
-    }
-    return loginData
+    const response = await axiosInstance.post("/login", {
+      username,
+      password,
+    })
+    return response.data
+  },
+  async getProfile() {
+    const response = await axiosInstance.get("/profile")
+    return response.data
   },
   async getChannels(): Promise<IChannelsResponse> {
     const response = await axiosInstance.get("/data")

@@ -33,8 +33,15 @@ const Login: React.FC = () => {
         onSubmit={(values: LoginFormValues) => handleSubmit(values)}
       >
         <Form>
-          <Field name="login" placeholder="Login" type="text" />
-          <Field name="password" placeholder="Password" type="password" />
+          <label htmlFor="login">Логин: </label>
+          <Field id="login" name="login" placeholder="Login" type="text" />
+          <label htmlFor="password">Пароль: </label>
+          <Field
+            id="password"
+            name="password"
+            placeholder="Password"
+            type="password"
+          />
           <button type="submit">Login</button>
         </Form>
       </Formik>
