@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SocketAPI from '../api/socket';
 import SlackAPI from '../api/slack';
 import { addChannel, clearChannelsState, removeFromChannels } from './channels';
-import { addMessage, clearMessageState } from './messages';
+import { addMessage, clearMessageState, getMessages } from './messages';
 import { clearLoginState, ILoginState } from './login';
 
 let socket: SocketAPI;
@@ -50,8 +50,16 @@ export const newChannel = createAsyncThunk(
 
 export const joinChannel = createAsyncThunk(
   'chat/joinChannel',
-  async (channelId: number) => {
+  async (channelId: number, thunkAPI) => {
+    // TODO: Catch errors
+    try {
+      await thunkAPI.dispatch(getMessages(channelId));
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error);
+    }
     socket.emit('joinChannel', { channelId });
+    return channelId;
   }
 );
 
@@ -138,8 +146,13 @@ const chatSlice = createSlice({
     builder.addCase(fetchChatData.fulfilled, (state, action) => {
       console.log(action.payload);
     });
+
     builder.addCase(fetchChatData.rejected, (state, action) => {
       console.log(action.payload);
+    });
+
+    builder.addCase(joinChannel.fulfilled, (state, action) => {
+      state.currentChannelId = action.payload;
     });
   },
 });

@@ -14,7 +14,7 @@ const Chat = () => {
           <div className={styles.chat_message}>
             <div className={styles.chat_message_text}>{item.message}</div>
             <Underline />
-            <div className={styles.chat_message_name}>{item.name}</div>
+            <div className={styles.chat_message_name}>{item.userName}</div>
           </div>
         ))}
       </div>

@@ -4,9 +4,10 @@ export const API_PATH = '';
 export const API_HOST = 'localhost:5000';
 
 export interface IMessage {
-  userId: number;
-  name: string;
+  id: number;
+  userName: string;
   message: string;
+  createdAt: string;
 }
 
 export interface IChannel {
@@ -51,6 +52,11 @@ const SlackAPI = {
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
     if (channelsData.channels === undefined) throw { error: 'Error' };
     return channelsData;
+  },
+
+  async getMessages(channelId: number): Promise<Array<IMessage>> {
+    const response = await axiosInstance.get(`/messages/${channelId}`);
+    return response.data;
   },
 };
 export default SlackAPI;

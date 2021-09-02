@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IMessage } from '../api/slack';
+import SlackAPI, { IMessage } from '../api/slack';
 
 interface IMessageState {
   messages: Array<IMessage>;
@@ -9,6 +9,17 @@ interface IMessageState {
 const initialState: IMessageState = {
   messages: [],
 };
+
+export const getMessages = createAsyncThunk(
+  'chat/getMessages',
+  async (channelId: number, thunkAPI) => {
+    try {
+      return await SlackAPI.getMessages(channelId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const messageSlice = createSlice({
   name: 'message',
@@ -20,6 +31,12 @@ const messageSlice = createSlice({
     clearMessageState() {
       return initialState;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getMessages.fulfilled, (state, action) => {
+      state.messages = [];
+      state.messages = action.payload;
+    });
   },
 });
 
