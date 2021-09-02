@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-export const API_PATH = '';
-export const API_HOST = 'localhost:5000';
+const REACT_APP_API_HOST = process.env.REACT_APP_API_HOST || 'http://localhost';
 
 export interface IMessage {
   id: number;
@@ -26,7 +25,7 @@ export interface ILoginData {
 }
 
 const axiosInstance = axios.create({
-  baseURL: `http://localhost:5000`,
+  baseURL: REACT_APP_API_HOST,
   headers: { 'content-type': 'application/json', Accept: 'application/json' },
 });
 

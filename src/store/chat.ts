@@ -5,6 +5,9 @@ import { addChannel, clearChannelsState, removeFromChannels } from './channels';
 import { addMessage, clearMessageState, getMessages } from './messages';
 import { clearLoginState, ILoginState } from './login';
 
+const REACT_APP_SOCKET_HOST =
+  process.env.REACT_APP_SOCKET_HOST || 'http://localhost:5000';
+
 let socket: SocketAPI;
 
 interface IChatState {
@@ -113,7 +116,7 @@ export const startChat = createAsyncThunk(
       login: ILoginState;
       chat: IChatState;
     };
-    socket = new SocketAPI('http://localhost:5000', state.login.token);
+    socket = new SocketAPI(REACT_APP_SOCKET_HOST, state.login.token);
     try {
       await thunkAPI.dispatch(fetchChatData());
       await thunkAPI.dispatch(subscribeChannels());
