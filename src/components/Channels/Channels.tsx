@@ -1,15 +1,15 @@
-import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { selectChannels } from "../../store/selectors"
-import styles from "./Channels.module.scss"
-import { newChannel } from "../../store/chat"
-import Input from "../tools/Input"
-import Channel from "./Channel/Channel"
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectChannels } from '../../store/selectors';
+import styles from './Channels.module.scss';
+import { newChannel } from '../../store/chat';
+import Input from '../tools/Input';
+import Channel from './Channel/Channel';
 
 const Channels: React.FC = () => {
-  const channels = useSelector(selectChannels)
-  const [newChannelInEditMode, setNewChannelEditMode] = useState(false)
-  const dispatch = useDispatch()
+  const channels = useSelector(selectChannels);
+  const [newChannelInEditMode, setNewChannelEditMode] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.channel_wrapper}>
@@ -32,8 +32,8 @@ const Channels: React.FC = () => {
             width={400}
             placeholder="Название канала..."
             callback={(data: string) => {
-              setNewChannelEditMode(false)
-              dispatch(newChannel(data))
+              setNewChannelEditMode(false);
+              dispatch(newChannel(data));
             }}
           />
         </div>
@@ -41,7 +41,7 @@ const Channels: React.FC = () => {
         <div
           className={styles.new_channel}
           onClick={() => {
-            setNewChannelEditMode(true)
+            setNewChannelEditMode(true);
           }}
           role="button"
           onKeyPress={() => {}}
@@ -51,7 +51,7 @@ const Channels: React.FC = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Channels
+export default Channels;

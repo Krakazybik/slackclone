@@ -1,31 +1,31 @@
-import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import cn from "classnames"
-import { removeChannel, switchChannel } from "../../../store/chat"
-import styles from "./Channel.module.scss"
-import { selectCurrentChannel } from "../../../store/selectors"
-import editIcon from "../../../assets/editBlack.png"
-import deleteIcon from "../../../assets/delete.png"
-import Modal from "../../tools/Modal"
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import cn from 'classnames';
+import { joinChannel, removeChannel } from '../../../store/chat';
+import styles from './Channel.module.scss';
+import { selectCurrentChannel } from '../../../store/selectors';
+import editIcon from '../../../assets/editBlack.png';
+import deleteIcon from '../../../assets/delete.png';
+import Modal from '../../tools/Modal';
 
 interface IChannel {
-  id: number
-  name: string
-  removable: boolean
+  id: number;
+  name: string;
+  removable: boolean;
 }
 
 const Channel: React.FC<IChannel> = ({ id, name, removable }) => {
-  const [editMode, setEditMode] = useState<boolean>(false)
-  const [isDeleteWindowShown, showDeleteWindow] = useState<boolean>(false)
-  const dispatch = useDispatch()
-  const currentChannel = useSelector(selectCurrentChannel)
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [isDeleteWindowShown, showDeleteWindow] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const currentChannel = useSelector(selectCurrentChannel);
 
   const handleClickChannel = (
     event: React.MouseEvent<HTMLElement>,
     channelId: number
   ) => {
-    dispatch(switchChannel(channelId))
-  }
+    dispatch(joinChannel(channelId));
+  };
 
   return (
     <div className={styles.channel_wrapper}>
@@ -36,8 +36,8 @@ const Channel: React.FC<IChannel> = ({ id, name, removable }) => {
           secondary="Нет"
           closeCallback={() => showDeleteWindow(false)}
           primaryCallback={() => {
-            dispatch(removeChannel(id))
-            showDeleteWindow(false)
+            dispatch(removeChannel(id));
+            showDeleteWindow(false);
           }}
           secondaryCallback={() => showDeleteWindow(false)}
         />
@@ -63,13 +63,13 @@ const Channel: React.FC<IChannel> = ({ id, name, removable }) => {
               alt={deleteIcon}
               height={25}
               onClick={() => showDeleteWindow(true)}
-              onKeyPress={(e) => e.key === "Enter" && showDeleteWindow(true)}
+              onKeyPress={(e) => e.key === 'Enter' && showDeleteWindow(true)}
             />
           </div>
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Channel
+export default Channel;

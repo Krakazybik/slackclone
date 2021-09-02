@@ -1,6 +1,6 @@
-import React from "react"
-import styles from "./tools.module.scss"
+import React from 'react';
+import styles from './tools.module.scss';
 
-const Underline: React.FC = () => <div className={styles.underline} />
+const Underline: React.FC = () => <div className={styles.underline} />;
 
-export default Underline
+export default Underline;

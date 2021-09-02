@@ -1,155 +1,160 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import SocketAPI from "../api/socket"
-import SlackAPI from "../api/slack"
-import { addChannel, clearChannelsState, removeFromChannels } from "./channels"
-import { addMessage, clearMessageState } from "./messages"
-import { clearLoginState } from "./login"
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import SocketAPI from '../api/socket';
+import SlackAPI from '../api/slack';
+import { addChannel, clearChannelsState, removeFromChannels } from './channels';
+import { addMessage, clearMessageState } from './messages';
+import { clearLoginState, ILoginState } from './login';
 
-const socket = new SocketAPI("http://srv.evgeraskin.ru:5000")
+let socket: SocketAPI;
 
 interface IChatState {
-  currentChannelId: number
+  currentChannelId: number;
 }
 
 const initialState: IChatState = {
   currentChannelId: 1,
-}
+};
 
 const fetchChatData = createAsyncThunk(
-  "channels/fetchChatData",
-  async (arg, thunkAPI) => {
+  'channels/fetchChatData',
+  async (argument, thunkAPI) => {
     try {
-      const response = await SlackAPI.getChannels()
-
+      const response = await SlackAPI.getChannels();
       response.channels.forEach((channel) =>
         thunkAPI.dispatch(addChannel(channel))
-      )
-
-      response.messages.forEach((message) => {
-        thunkAPI.dispatch(addMessage(message))
-      })
-
-      return response
-    } catch (err) {
-      return thunkAPI.rejectWithValue("Error")
+      );
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
     }
   }
-)
+);
 
 export const newMessage = createAsyncThunk(
-  "chat/newMessage",
+  'chat/newMessage',
   async (message: string, thunkAPI) => {
-    const state = thunkAPI.getState() as {
-      chat: { currentChannelId: number }
-      login: { username: string }
-    }
-    socket.emit("newMessage", {
+    const state = thunkAPI.getState() as { chat: IChatState };
+    socket.emit('newMessage', {
       message,
-      name: state.login.username,
       channelId: state.chat.currentChannelId,
-    })
+    });
   }
-)
+);
 
 export const newChannel = createAsyncThunk(
-  "chat/newChannel",
+  'chat/newChannel',
   async (channelName: string) => {
-    socket.emit("newChannel", { name: channelName })
+    socket.emit('newChannel', { name: channelName });
   }
-)
+);
+
+export const joinChannel = createAsyncThunk(
+  'chat/joinChannel',
+  async (channelId: number) => {
+    socket.emit('joinChannel', { channelId });
+  }
+);
 
 export const removeChannel = createAsyncThunk(
-  "chat/removeChannel",
+  'chat/removeChannel',
   async (channelId: number) => {
-    socket.emit("removeChannel", { id: channelId })
+    socket.emit('removeChannel', { id: channelId });
   }
-)
+);
 
 export const subscribeMessages = createAsyncThunk(
-  "chat/subscribeMessages",
+  'chat/subscribeMessages',
   async (data, thunkAPI) => {
-    socket.on("newMessage", (message) => thunkAPI.dispatch(addMessage(message)))
+    socket.on('newMessage', (message) =>
+      thunkAPI.dispatch(addMessage(message))
+    );
   }
-)
+);
 
 const subscribeChannels = createAsyncThunk(
-  "chat/subscribeChannels",
+  'chat/subscribeChannels',
   async (data, thunkAPI) => {
-    socket.on("newChannel", (channelName) =>
+    socket.on('newChannel', (channelName) =>
       thunkAPI.dispatch(addChannel(channelName))
-    )
+    );
   }
-)
+);
 
 const subscribeRemoveChannel = createAsyncThunk(
-  "chat/subscribeRemoveChannel",
+  'chat/subscribeRemoveChannel',
   async (data, thunkAPI) => {
-    socket.on("removeChannel", (message) =>
+    socket.on('removeChannel', (message) =>
       thunkAPI.dispatch(removeFromChannels(message.id))
-    )
+    );
   }
-)
+);
 
 const subscribeRenameChannel = createAsyncThunk(
-  "chat/subscribeRenameChannel",
+  'chat/subscribeRenameChannel',
   async (data, thunkAPI) => {
-    socket.on("renameChannel", (message) =>
+    socket.on('renameChannel', (message) =>
       thunkAPI.dispatch(addMessage(message))
-    )
+    );
   }
-)
+);
 
 export const startChat = createAsyncThunk(
-  "chat/startChat",
+  'chat/startChat',
   async (data, thunkAPI) => {
+    const state = thunkAPI.getState() as {
+      login: ILoginState;
+      chat: IChatState;
+    };
+    socket = new SocketAPI('http://localhost:5000', state.login.token);
     try {
-      await thunkAPI.dispatch(fetchChatData())
-      await thunkAPI.dispatch(subscribeChannels())
-      await thunkAPI.dispatch(subscribeRemoveChannel())
-      await thunkAPI.dispatch(subscribeRenameChannel())
-      await thunkAPI.dispatch(subscribeMessages())
-    } catch (err) {
-      console.log(err)
+      await thunkAPI.dispatch(fetchChatData());
+      await thunkAPI.dispatch(subscribeChannels());
+      await thunkAPI.dispatch(subscribeRemoveChannel());
+      await thunkAPI.dispatch(subscribeRenameChannel());
+      await thunkAPI.dispatch(subscribeMessages());
+      await thunkAPI.dispatch(joinChannel(state.chat.currentChannelId));
+    } catch (error) {
+      console.log(error);
     }
   }
-)
+);
 
 const chatSlice = createSlice({
-  name: "chat",
+  name: 'chat',
   initialState,
   reducers: {
     switchChannel(state, action: PayloadAction<number>) {
-      state.currentChannelId = action.payload
+      state.currentChannelId = action.payload;
     },
     clearChatState() {
-      return initialState
+      return initialState;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(newMessage.fulfilled, (state, action) => {
-      console.log(action)
-    })
+      console.log(action);
+    });
 
     builder.addCase(fetchChatData.fulfilled, (state, action) => {
-      state.currentChannelId = action.payload.currentChannelId
-    })
+      console.log(action.payload);
+    });
     builder.addCase(fetchChatData.rejected, (state, action) => {
-      console.log(action.payload)
-    })
+      console.log(action.payload);
+    });
   },
-})
+});
 
-export const { switchChannel, clearChatState } = chatSlice.actions
+export const { switchChannel, clearChatState } = chatSlice.actions;
 
 export const exitChat = createAsyncThunk(
-  "chat/exitChat",
+  'chat/exitChat',
   async (data, thunkAPI) => {
-    socket.close()
-    await thunkAPI.dispatch(clearLoginState())
-    await thunkAPI.dispatch(clearChatState())
-    await thunkAPI.dispatch(clearChannelsState())
-    await thunkAPI.dispatch(clearMessageState())
+    socket.close();
+    await thunkAPI.dispatch(clearLoginState());
+    await thunkAPI.dispatch(clearChatState());
+    await thunkAPI.dispatch(clearChannelsState());
+    await thunkAPI.dispatch(clearMessageState());
   }
-)
+);
 
-export default chatSlice.reducer
+export default chatSlice.reducer;

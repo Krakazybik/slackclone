@@ -1,28 +1,28 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IMessage } from "../api/slack"
+import { IMessage } from '../api/slack';
 
 interface IMessageState {
-  messages: Array<IMessage>
+  messages: Array<IMessage>;
 }
 
 const initialState: IMessageState = {
   messages: [],
-}
+};
 
 const messageSlice = createSlice({
-  name: "message",
+  name: 'message',
   initialState,
   reducers: {
     addMessage(state, action: PayloadAction<IMessage>) {
-      state.messages.push(action.payload)
+      state.messages.push(action.payload);
     },
     clearMessageState() {
-      return initialState
+      return initialState;
     },
   },
-})
+});
 
-export const { addMessage, clearMessageState } = messageSlice.actions
+export const { addMessage, clearMessageState } = messageSlice.actions;
 
-export default messageSlice.reducer
+export default messageSlice.reducer;

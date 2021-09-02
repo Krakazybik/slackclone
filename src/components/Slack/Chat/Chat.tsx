@@ -1,12 +1,12 @@
-import React from "react"
-import { useSelector } from "react-redux"
-import styles from "./Chat.module.scss"
-import Send from "./Send/Send"
-import Underline from "../../tools/Underline"
-import { selectMessages } from "../../../store/selectors"
+import React from 'react';
+import { useSelector } from 'react-redux';
+import styles from './Chat.module.scss';
+import Send from './Send/Send';
+import Underline from '../../tools/Underline';
+import { selectMessages } from '../../../store/selectors';
 
 const Chat = () => {
-  const messages = useSelector(selectMessages)
+  const messages = useSelector(selectMessages);
   return (
     <div className={styles.chat_wrapper}>
       <div className={styles.chat}>
@@ -22,7 +22,7 @@ const Chat = () => {
         <Send />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;
