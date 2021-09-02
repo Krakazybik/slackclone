@@ -5,7 +5,7 @@ import ellipse from '../../../../assets/Ellipse 2.svg';
 import { newMessage } from '../../../../store/chat';
 import Underline from '../../../tools/Underline';
 
-const Send = () => {
+const Send: React.FC = () => {
   const dispatch = useDispatch();
   const textAreaReference = useRef<HTMLInputElement>(null);
   const handleClickSend = () => {

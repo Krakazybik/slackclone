@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const REACT_APP_API_HOST = process.env.REACT_APP_API_HOST || 'http://localhost';
+const REACT_APP_API_HOST =
+  process.env.REACT_APP_API_HOST || 'http://localhost:5000';
 
 export interface IMessage {
   id: number;
@@ -40,10 +41,6 @@ const SlackAPI = {
     });
     return response.data;
   },
-  async getProfile() {
-    const response = await axiosInstance.get('/profile');
-    return response.data;
-  },
 
   async getChannels(): Promise<IChannelsResponse> {
     const response = await axiosInstance.get('/channels');
@@ -51,6 +48,14 @@ const SlackAPI = {
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
     if (channelsData.channels === undefined) throw { error: 'Error' };
     return channelsData;
+  },
+
+  async regUser(email: string, password: string): Promise<ILoginData> {
+    const response = await axiosInstance.post('/auth/registration', {
+      email,
+      password,
+    });
+    return response.data;
   },
 
   async getMessages(channelId: number): Promise<Array<IMessage>> {

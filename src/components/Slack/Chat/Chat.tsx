@@ -5,7 +5,7 @@ import Send from './Send/Send';
 import Underline from '../../tools/Underline';
 import { selectMessages } from '../../../store/selectors';
 
-const Chat = () => {
+const Chat: React.FC = () => {
   const messages = useSelector(selectMessages);
   return (
     <div className={styles.chat_wrapper}>

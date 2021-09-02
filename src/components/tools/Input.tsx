@@ -1,14 +1,16 @@
 import React from 'react';
+import { FieldInputProps } from 'react-final-form';
 import styles from './tools.module.scss';
 
 interface IInputProperties {
   width: number;
   placeholder?: string;
-  type?: 'text' | 'password';
+  type?: string;
   src?: string;
   label?: string;
   callback?: (data: string) => void;
   autofocus?: boolean;
+  input?: FieldInputProps<string, HTMLElement>;
 }
 
 const Input: React.FC<IInputProperties> = ({
@@ -19,6 +21,7 @@ const Input: React.FC<IInputProperties> = ({
   label,
   callback,
   autofocus = false,
+  input,
 }) => (
   <div className={styles.input_wrapper}>
     {label && (
@@ -27,6 +30,8 @@ const Input: React.FC<IInputProperties> = ({
       </div>
     )}
     <input
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
+      {...input}
       /* eslint-disable-next-line jsx-a11y/no-autofocus */
       autoFocus={autofocus}
       onKeyPress={(event) =>

@@ -165,11 +165,11 @@ export const { switchChannel, clearChatState } = chatSlice.actions;
 export const exitChat = createAsyncThunk(
   'chat/exitChat',
   async (data, thunkAPI) => {
-    socket.close();
     await thunkAPI.dispatch(clearLoginState());
     await thunkAPI.dispatch(clearChatState());
     await thunkAPI.dispatch(clearChannelsState());
     await thunkAPI.dispatch(clearMessageState());
+    socket.close();
   }
 );
 

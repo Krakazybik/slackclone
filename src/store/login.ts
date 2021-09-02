@@ -17,13 +17,17 @@ const initUserName = () => {
   return userName || '';
 };
 
+interface ILoginData {
+  login: string;
+  password: string;
+  registration: boolean;
+}
+
 export const loginUser = createAsyncThunk(
   'login/login',
-  async (
-    { login, password }: { login: string; password: string },
-    thunkAPI
-  ) => {
+  async ({ login, password, registration }: ILoginData, thunkAPI) => {
     try {
+      if (registration) return await SlackAPI.regUser(login, password);
       return await SlackAPI.login(login, password);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -40,10 +44,11 @@ const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    clearLoginState() {
+    clearLoginState(state) {
+      state.token = '';
+      state.username = '';
       localStorage.removeItem('jwtToken');
       localStorage.removeItem('username');
-      return initialState;
     },
   },
   extraReducers: (builder) => {

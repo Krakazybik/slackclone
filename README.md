@@ -1,14 +1,8 @@
-## Slack
-###TODO:
-#### Работа с чатом
-Реализуйте работу чата канала General, который открывается по умолчанию при заходе на сайт. Чат работает для всех пользователей открывших данный сайт (эмулируйте заход разных пользователей через разные браузеры). При необходимости добавьте новых пользователей в код серверной части.
+## Slackclone
+#### Чат на `Socket.IO` 
+Технологии: `ReactJS Redux RTK Axios Socket.IO SCSS`<br>
 
-####Ссылки
-• Websocket (https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications)
-• Socket.IO (https://socket.io/)
-• JSONAPI (https://jsonapi.org/)
-####Задачи
-• Реализуйте создание и получение сообщений через websockets.
-Ваш интерфейс должен учитывать, что сеть может тормозить или вообще пропадать. Вы можете использовать функцию подтверждения доставки сообщений библиотеки socket.io (https://socket.io/docs/v3/emitting-events/#Acknowledgements)
-####Подсказки
-• Изучите маршруты внутри файла /routes.js серверной части
+####Запуск: <br>
+`yarn install`  <br> 
+`yarn run start` - для development<br>
+`yarn run build` - создание production билда<br>

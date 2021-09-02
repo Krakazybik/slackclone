@@ -26,6 +26,7 @@ const messageSlice = createSlice({
   initialState,
   reducers: {
     addMessage(state, action: PayloadAction<IMessage>) {
+      console.log(action.payload);
       state.messages.push(action.payload);
     },
     clearMessageState() {
