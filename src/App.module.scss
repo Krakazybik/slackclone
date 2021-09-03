@@ -7,13 +7,22 @@
 
 .slack_wrapper {
   background-color: white;
-  margin: 44px 24px 24px 24px;
-  border-radius: 16px;
-  display: grid;
-  grid-template-areas: "header main" "nav main";
-  grid-template-rows: 72px 10fr;
-  grid-template-columns: 464px 10fr;
-  height: calc(90vh - 20px);
+
+  @media screen and (min-width: 450px) {
+    margin: 44px 24px 24px 24px;
+    border-radius: 16px;
+    display: grid;
+    grid-template-areas: "header main" "nav main";
+    grid-template-rows: 72px 10fr;
+    grid-template-columns: 464px 10fr;
+    height: calc(90vh - 20px);
+  }
+
+  @media screen and (max-width: 451px) {
+    display: flex;
+    flex-direction: column;
+    height: calc(90vh - 20px);
+  }
 }
 
 .slack_main {

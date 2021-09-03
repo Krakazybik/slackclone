@@ -21,12 +21,12 @@ const Header: React.FC = () => (
       </div>
     </Link>
 
-    <Link to="/profile" style={{ textDecoration: 'none' }}>
+    {/*    <Link to="/profile" style={{ textDecoration: 'none' }}>
       <div className={styles.button}>
         <img src={Profile} alt="none" />
         <span>Профиль</span>
       </div>
-    </Link>
+    </Link> */}
     <Link to="/exit" style={{ textDecoration: 'none' }}>
       <div className={styles.button}>
         <img src={Messages} alt="none" />

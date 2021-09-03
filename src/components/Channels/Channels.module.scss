@@ -8,6 +8,7 @@
   justify-items: center;
   align-items: center;
   @include slack-font-secondary(16px);
+  min-height: 50px;
   overflow: auto;
 }
 

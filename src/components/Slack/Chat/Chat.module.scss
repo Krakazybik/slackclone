@@ -6,6 +6,9 @@
   grid-template-rows: 10fr 1fr;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.08);
   height: calc(90vh - 20px);
+  @media screen and (max-width: 450px) {
+    height: calc(90vh - 37px);
+  }
 }
 
 .chat {
@@ -15,29 +18,49 @@
 }
 
 .send {
-  margin-bottom: 10px;
   grid-area: send;
-  height: 120px;
+  @media screen and (min-width: 451px) {
+    height: 120px;
+    margin-bottom: 10px;
+  }
 }
 
 .chat_message_text {
   margin: 10px 20px 10px 20px;
-
 }
 
 .chat_message {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  background-color: $slack-primary;
-  color: $slack-gray;
-  font-family: $slack-font;
-  font-size: 16px;
-  line-height: 24px;
-  border-radius: 5px;
-  margin: 20px;
-  padding: 20px 20px 5px;
-  width: 70%;
+  @media screen and (max-width: 450px) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: $slack-primary;
+    color: $slack-gray;
+    font-family: $slack-font;
+    font-size: 12px;
+    line-height: 14px;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px 5px 5px;
+    width: 70%;
+  }
+
+  @media screen and (min-width: 451px) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: $slack-primary;
+    color: $slack-gray;
+    font-family: $slack-font;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 20px 20px 5px;
+    width: 70%;
+  }
+
+
 }
 
 .chat_message_name {

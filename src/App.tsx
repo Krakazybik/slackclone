@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (jwtToken) dispatch(startChat());
-  }, [jwtToken, dispatch]);
+  }, [jwtToken]);
 
   return (
     <div className={styles.app}>
